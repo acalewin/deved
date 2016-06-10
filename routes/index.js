@@ -171,4 +171,41 @@ module.exports = function (app, addon) {
     });
   });
 
+  // This is an example route to handle an incoming webhook
+  app.post('/webhook',
+    addon.authenticate(),
+    function (req, res) {
+      var command = req.body.item.message.message;
+      var options = {};
+      command = parseCommand(command);
+      var resp = ''
+      if (command.command.trim().toLowerCase() === 'pants') {
+        resp = 'Pants are oppression!';
+        options = {
+          options: {
+            color: "red"
+          }
+        };
+      }
+      hipchat.sendMessage(req.clientInfo, req.context.item.room.id, resp, options)
+        .then(function (data) {
+          res.send(200);
+        });
+    });
+
 };
+
+function parseCommand(cmd) {
+  var fullCommand = cmd.substr(cmd.indexOf(" ") + 1, cmd.length - 1);
+  var command = fullCommand.substr(0, fullCommand.indexOf(" ") + 1);
+  var cityState = fullCommand.substr(fullCommand.indexOf(command) + command.length);
+  var city = cityState.substr(0, cityState.indexOf(", "));
+  cityState = cityState.substr(cityState.indexOf(city) + city.length  + 2);
+  city = city.replace(" ", "_");
+  var state = cityState.substr(cityState.indexOf(" ") + 1);
+  return {
+    command: command,
+    city: city,
+    state: state
+  };
+}
