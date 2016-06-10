@@ -1,0 +1,44 @@
+{
+  "key": "pants",
+  "name": "Hello!",
+  "description": "My very first HipChat add-on",
+  "vendor": {
+    "name": "Jon Gasser",
+    "url": "https://www.hipchat.com"
+  },
+  "links": {
+    "self": "{{localBaseUrl}}/atlassian-connect.json",
+    "homepage": "{{localBaseUrl}}"
+  },
+  "capabilities": {
+    "hipchatApiConsumer": {
+      "scopes": [
+        "send_notification",
+        "view_room"
+      ]
+    },
+    "installable": {
+      "allowGlobal": false,
+      "callbackUrl": "{{localBaseUrl}}/installable"
+    },
+    "configurable": {
+      "url": "{{localBaseUrl}}/config"
+    },
+    "webhook": {
+      "url": "{{localBaseUrl}}/webhook",
+      "pattern": "^/pants",
+      "event": "room_message",
+      "name": "Hello!"
+    },
+    "webPanel": [
+      {
+        "key": "sample.sidebar",
+        "name": {
+          "value": "Hello Sidebar!"
+        },
+        "location": "hipchat.sidebar.right",
+        "url": "{{localBaseUrl}}/sidebar"
+      }
+    ]
+  }
+}
