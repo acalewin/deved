@@ -28,7 +28,8 @@
       "url": "{{localBaseUrl}}/webhook",
       "pattern": "^/pants",
       "event": "room_message",
-      "name": "Hello!"
+      "name": "Hello!",
+      "authentication": "jwt"
     },
     "webPanel": [
       {
